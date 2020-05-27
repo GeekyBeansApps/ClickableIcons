@@ -7,7 +7,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.geekybeans.clickableiconslib.R
-import com.geekybeans.clickableiconslib.models.AnimatedIcon
+import com.geekybeans.clickableiconslib.models.LottieAnimatedIcon
 import com.geekybeans.clickableiconslib.models.ClickableIcon
 import com.geekybeans.clickableiconslib.models.ImageIcon
 import com.geekybeans.clickableiconslib.models.SelectableIcon
@@ -15,9 +15,9 @@ import kotlinx.android.synthetic.main.item_clickable_icon_image.view.*
 import kotlinx.android.synthetic.main.item_clickable_icon_animtaion.view.*
 import kotlinx.android.synthetic.main.item_clickable_icon_selectable.view.*
 
-
-class ClickableIconsAdapter(private val clickableIcons: List<ClickableIcon>, val iconClickListener: IconClickedListener?):
-    RecyclerView.Adapter<ClickableIconsAdapter.ClickableIconsBaseViewHolder>()
+/** description one**/
+class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIcon>, val iconClickListener: IconClickedListener?):
+    RecyclerView.Adapter<ClickableIconsRecyclerAdapter.ClickableIconsBaseViewHolder>()
 {
     companion object
     {
@@ -33,7 +33,7 @@ class ClickableIconsAdapter(private val clickableIcons: List<ClickableIcon>, val
         return when(clickableIcons[position])
         {
             is ImageIcon -> IMAGE_ICON_LAYOUT_ID
-            is AnimatedIcon -> ANIMATED_ICON_LAYOUT_ID
+            is LottieAnimatedIcon -> ANIMATED_ICON_LAYOUT_ID
             is SelectableIcon -> SELECTABLE_ICON_LAYOUT_ID
         }
     }
@@ -141,8 +141,8 @@ class ClickableIconsAdapter(private val clickableIcons: List<ClickableIcon>, val
         {
             view.clickable_icon_animated_imageView.apply {
                 setAnimation(clickableIcon.iconImageResource)
-                repeatCount = (clickableIcon as AnimatedIcon).repeatCount
-                speed = (clickableIcon as AnimatedIcon).animationSpeed
+                repeatCount = (clickableIcon as LottieAnimatedIcon).repeatCount
+                speed = clickableIcon.animationSpeed
                 playAnimation()
             }
 
