@@ -1,16 +1,46 @@
 package com.geekybeans.clickableiconslib.adapters
 
 import android.content.Context
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.geekybeans.clickableiconslib.models.ClickableIcon
 import com.geekybeans.clickableiconslib.models.ClickableIconSet
 import kotlinx.android.synthetic.main.clickable_icon_set.view.*
 
-class ClickableIconAdapter(val context:Context, private val iconSetView: ClickableIconSet, private val iconSet: List<ClickableIcon>) :
-    ClickableIconsRecyclerAdapter.IconClickedListener {
-    private constructor(context:Context, builder: Builder): this(context, builder.iconSetView, builder.iconSet)
 
-    inner class Builder
+/**
+ *  The ClickableIconAdapter class is an adapter for the Clickable icon's custom view.
+ *
+ *  @property iconSetView a reference to the custom view ClickableIconSet.
+ *
+ *  @property iconSet a list of ClickableIcons to be used in the view.
+ *
+ */
+class ClickableIconAdapter(private val iconSetView: ClickableIconSet, private val iconSet: List<ClickableIcon>)
+{
+    private constructor(builder: Builder): this(builder.iconSetView, builder.iconSet)
+
+    companion object
+    {
+        const val ORIENTATION_HORIZONTAL = RecyclerView.HORIZONTAL
+        const val ORIENTATION_VERTICAL = RecyclerView.VERTICAL
+        const val LAYOUT_LINEAR = 10
+        const val LAYOUT_GRID = 11
+        const val DEFAULT_SPAN_COUNT = 3
+        const val DEFAULT_WIDTH = -2
+        const val DEFAULT_HEIGHT = -2
+    }
+
+    /**
+     *  The ClickableIconAdapter.Builder class is a builder for the Clickable icon's custom view adapter.
+     *
+     *  @property iconSetView a reference to the custom view ClickableIconSet.
+     *
+     *  @property iconSet a list of ClickableIcons to be used in the view.
+     */
+    class Builder
     {
         lateinit var iconSetView: ClickableIconSet
             private set
@@ -18,27 +48,71 @@ class ClickableIconAdapter(val context:Context, private val iconSetView: Clickab
         lateinit var iconSet: List<ClickableIcon>
             private set
 
+        private var orientation: Int = ORIENTATION_VERTICAL
+        private var layout: Int = LAYOUT_LINEAR
+        private var spanCount: Int = DEFAULT_SPAN_COUNT
+        private var width: Int = DEFAULT_WIDTH
+        private var height: Int = DEFAULT_HEIGHT
 
         fun iconSetView(iconSetView: ClickableIconSet) = apply { this.iconSetView = iconSetView }
 
         fun iconSet(iconSet: List<ClickableIcon>) = apply { this.iconSet = iconSet }
 
-        fun build() =
-            ClickableIconAdapter(
-                context,
-                this
-            )
-    }
+        /**
+         * @param orientation sets the ClickableIconSet orientation (default is ORIENTATION_VERTICAL)
+         */
+        fun setOrientation(orientation: Int) = apply { this.orientation = orientation }
 
-    fun setAdapter()
-    {
-        iconSetView.icon_set_recycler.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = ClickableIconsRecyclerAdapter(iconSet, this@ClickableIconAdapter)
+        /**
+         * @param layout sets the ClickableIconSet layout manager (default is LAYOUT_LINEAR)
+         */
+        fun setLayoutManager(layout: Int) = apply { this.layout = layout}
+
+        /**
+         * @param spanCount sets the ClickableIconSet layout's span count (default is DEFAULT_SPAN_COUNT(3))
+         */
+        fun setLayoutSpanCount(spanCount: Int) = apply { this.spanCount = spanCount}
+
+        /**
+         * @param width sets the icon's width (default is WRAP_CONTENT)
+         *
+         * @param height sets the icon's height (default is WRAP_CONTENT)
+         *
+         */
+        fun setIconSize(width: Int, height:Int) = apply {
+            this.width = width
+            this.height = height
         }
-    }
 
-    override fun onIconClicked(iconDescription: String) {
-        TODO("Not yet implemented")
+        /**
+         * Set the adapter for the ClickableIcon set.
+         *
+         * @param context the context that will be using the view.
+         *
+         * @param iconClickListener the listener for the ClickableIcon's on click.
+         * The IconClickedListener interface must be implemented in order to use it,
+         * if icons are for visual purposes only, and no user interaction is required - a null value could be passed.
+         */
+        fun setAdapter(context:Context, iconClickListener: ClickableIconsRecyclerAdapter.IconClickedListener?) = apply {
+            iconSetView.icon_set_recycler.apply {
+                when (layout)
+                {
+                    LAYOUT_LINEAR -> layoutManager = LinearLayoutManager(context, orientation,false)
+                    LAYOUT_GRID -> layoutManager = GridLayoutManager(context, spanCount)
+                }
+
+                val params = ConstraintLayout.LayoutParams(
+                    if (this@Builder.width > 0) this@Builder.width else ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                    if (this@Builder.height > 0) this@Builder.height else ConstraintLayout.LayoutParams.WRAP_CONTENT
+                )
+
+                adapter = ClickableIconsRecyclerAdapter(iconSet, iconClickListener, params)
+            }
+        }
+
+        /**
+         *  Build the ClickableIconSet view according to the builder's values.
+         */
+        fun build() = ClickableIconAdapter(this)
     }
 }

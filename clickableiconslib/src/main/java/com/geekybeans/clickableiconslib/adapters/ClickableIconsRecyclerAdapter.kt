@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.geekybeans.clickableiconslib.R
 import com.geekybeans.clickableiconslib.models.LottieAnimatedIcon
@@ -15,15 +17,16 @@ import kotlinx.android.synthetic.main.item_clickable_icon_image.view.*
 import kotlinx.android.synthetic.main.item_clickable_icon_animtaion.view.*
 import kotlinx.android.synthetic.main.item_clickable_icon_selectable.view.*
 
-/** description one**/
-class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIcon>, val iconClickListener: IconClickedListener?):
-    RecyclerView.Adapter<ClickableIconsRecyclerAdapter.ClickableIconsBaseViewHolder>()
+
+class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIcon>, val iconClickListener: IconClickedListener?, val params: ConstraintLayout.LayoutParams)
+    : RecyclerView.Adapter<ClickableIconsRecyclerAdapter.ClickableIconsBaseViewHolder>()
 {
     companion object
     {
         val IMAGE_ICON_LAYOUT_ID:Int = R.layout.item_clickable_icon_image
         val ANIMATED_ICON_LAYOUT_ID = R.layout.item_clickable_icon_animtaion
         val SELECTABLE_ICON_LAYOUT_ID = R.layout.item_clickable_icon_selectable
+        const val FADE_OUT_DURATION = 300L
     }
 
     override fun getItemCount() = clickableIcons.size
@@ -61,7 +64,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
         fun fadeOutClickedIcon(iconDescription: String)
         {
             val anim = AnimationUtils.loadAnimation(baseItemView.context, android.R.anim.fade_out)
-            anim.duration = 300 //TODO: const
+            anim.duration = FADE_OUT_DURATION
 
             anim.setAnimationListener(object : Animation.AnimationListener{
                 override fun onAnimationRepeat(animation: Animation?) {}
@@ -82,9 +85,13 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
         override fun bind(clickableIcon: ClickableIcon)
         {
             //set the image resource
-            view.clickable_icon_image_imageView.setBackgroundResource(clickableIcon.iconImageResource)
+            view.clickable_icon_image_imageView.apply {
+                setBackgroundResource(clickableIcon.iconImageResource)
+                // this.layoutParams = params
+            }
+
             //set the description if exists
-            if (clickableIcon.iconDescription.isNotBlank())
+            if (clickableIcon.iconDescription.isNotBlank() && clickableIcon.showIconDescriptionAsLabel)
             {
                 view.clickable_icon_image_description.text = clickableIcon.iconDescription
             }
@@ -92,31 +99,32 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             {
                 view.clickable_icon_image_description.visibility = View.GONE
             }
+
             //set icon click listener
             if (iconClickListener != null)
             {
                 view.clickable_icon_image_imageView.setOnClickListener {
-                    if (clickableIcon.fadeOutIconAfterSelection)
-                    {
-                        fadeOutClickedIcon(clickableIcon.iconDescription)
-                    }
-                    else
-                    {
-                        iconClickListener.onIconClicked(clickableIcon.iconDescription)
+                    when {
+                        clickableIcon.fadeOutIconAfterSelection -> fadeOutClickedIcon(clickableIcon.iconDescription)
+                        else -> iconClickListener.onIconClicked(clickableIcon.iconDescription)
                     }
                 }
             }
         }
     }
 
-    inner class ClickableIconsSelectableViewHolder(val view: View): ClickableIconsBaseViewHolder(view)
+    inner class ClickableIconsSelectableViewHolder(private val view: View): ClickableIconsBaseViewHolder(view)
     {
         override fun bind(clickableIcon: ClickableIcon)
         {
             //set the image resource
-            view.clickable_icon_selectable_imageView.setBackgroundResource(clickableIcon.iconImageResource)
+            view.clickable_icon_selectable_imageView.apply {
+                setBackgroundResource(clickableIcon.iconImageResource)
+                // this.layoutParams = params
+            }
+
             //set the description if exists
-            if (clickableIcon.iconDescription.isNotBlank())
+            if (clickableIcon.iconDescription.isNotBlank() && clickableIcon.showIconDescriptionAsLabel)
             {
                 view.clickable_icon_selectable_description.text = clickableIcon.iconDescription
             }
@@ -124,6 +132,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             {
                 view.clickable_icon_selectable_description.visibility = View.GONE
             }
+
             //set icon click listener
             if (iconClickListener != null)
             {
@@ -135,19 +144,22 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
         }
     }
 
-    inner class ClickableIconsAnimatedViewHolder(val view: View): ClickableIconsBaseViewHolder(view)
+    inner class ClickableIconsAnimatedViewHolder(private val view: View): ClickableIconsBaseViewHolder(view)
     {
         override fun bind(clickableIcon: ClickableIcon)
         {
             view.clickable_icon_animated_imageView.apply {
+                if (params.width > 0 || params.height > 0) this.layoutParams = params
+                //set the icon's animation
                 setAnimation(clickableIcon.iconImageResource)
                 repeatCount = (clickableIcon as LottieAnimatedIcon).repeatCount
                 speed = clickableIcon.animationSpeed
+                scaleType = ImageView.ScaleType.CENTER_INSIDE
                 playAnimation()
             }
 
             //set the description if exists
-            if (clickableIcon.iconDescription.isNotBlank())
+            if (clickableIcon.iconDescription.isNotBlank() && clickableIcon.showIconDescriptionAsLabel)
             {
                 view.clickable_icon_animated_description.text = clickableIcon.iconDescription
             }

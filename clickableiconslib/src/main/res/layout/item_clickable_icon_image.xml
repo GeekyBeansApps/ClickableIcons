@@ -3,16 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingStart="10dp"
-    android:paddingTop="10dp"
-    android:paddingEnd="10dp">
+    android:layout_gravity="center">
 
     <ImageButton
         android:id="@+id/clickable_icon_image_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/clickable_icon_image_description"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,11 +22,19 @@
         android:id="@+id/clickable_icon_image_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/dummy"
         android:textAlignment="center"
+        android:textSize="16sp"
+        android:ems="5"
+        android:maxLines="2"
+        android:ellipsize="marquee"
+        android:singleLine="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clickable_icon_image_imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clickable_icon_image_imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
