@@ -1,5 +1,6 @@
 package com.geekybeans.clickableiconslib.adapters
 
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             is ImageIcon -> IMAGE_ICON_LAYOUT_ID
             is LottieAnimatedIcon -> ANIMATED_ICON_LAYOUT_ID
             is SelectableIcon -> SELECTABLE_ICON_LAYOUT_ID
+//            is SelectableIcon, is MultiSelectableIcon -> SELECTABLE_ICON_LAYOUT_ID
         }
     }
 
@@ -60,6 +62,12 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
     abstract inner class ClickableIconsBaseViewHolder(private val baseItemView: View): RecyclerView.ViewHolder(baseItemView)
     {
         abstract fun bind(clickableIcon: ClickableIcon)
+        val ripple = TypedValue()
+
+        init
+        {
+            baseItemView.context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, ripple, true)
+        }
 
         fun fadeOutClickedIcon(iconDescription: String)
         {
@@ -86,7 +94,8 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
         {
             //set the image resource
             view.clickable_icon_image_imageView.apply {
-                setBackgroundResource(clickableIcon.iconImageResource)
+                setBackgroundResource(ripple.resourceId)
+                setImageResource(clickableIcon.iconImageResource)
                 // this.layoutParams = params
             }
 
@@ -119,7 +128,8 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
         {
             //set the image resource
             view.clickable_icon_selectable_imageView.apply {
-                setBackgroundResource(clickableIcon.iconImageResource)
+                setBackgroundResource(ripple.resourceId)
+                setImageDrawable((clickableIcon as SelectableIcon).iconSelectorResource)
                 // this.layoutParams = params
             }
 
@@ -138,7 +148,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             {
                 view.clickable_icon_selectable_imageView.setOnClickListener {
                     it.isSelected = !it.isSelected
-                    iconClickListener.onIconClicked(clickableIcon.iconDescription)
+                    iconClickListener.onIconSelected(clickableIcon.iconDescription, it.isSelected)
                 }
             }
         }
@@ -150,6 +160,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
         {
             view.clickable_icon_animated_imageView.apply {
                 if (params.width > 0 || params.height > 0) this.layoutParams = params
+                setBackgroundResource(ripple.resourceId)
                 //set the icon's animation
                 setAnimation(clickableIcon.iconImageResource)
                 repeatCount = (clickableIcon as LottieAnimatedIcon).repeatCount
@@ -188,5 +199,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
     interface IconClickedListener
     {
         fun onIconClicked(iconDescription: String)
+        fun onIconSelected(iconDescription: String, isSelected: Boolean)
+//        fun onIconSelected(iconDescription: String, state: Int)
     }
 }
