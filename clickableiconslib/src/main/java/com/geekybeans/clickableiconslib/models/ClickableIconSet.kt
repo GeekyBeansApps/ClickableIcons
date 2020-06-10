@@ -30,6 +30,7 @@ class ClickableIconSet(private val viewsContext: Context, attrs: AttributeSet): 
     private var frameIsShowing = false
     private var currentFrameColor: Int = Color.TRANSPARENT
     private var currentBackgroundColor: Int = Color.TRANSPARENT
+    private var currentTitle: String = ""
 
     init
     {
@@ -44,6 +45,15 @@ class ClickableIconSet(private val viewsContext: Context, attrs: AttributeSet): 
             setTitle(true, attributes.getString(R.styleable.ClickableIconSet_title).toString(),
                 attributes.getFloat(R.styleable.ClickableIconSet_title_text_size, 14f),
                 attributes.getColor(R.styleable.ClickableIconSet_title_text_color, Color.BLACK))
+        }
+        else
+        {
+            val title = attributes.getString(R.styleable.ClickableIconSet_title).toString()
+
+            if (title.isNotBlank())
+            {
+                currentTitle = title
+            }
         }
 
         //view's frame
@@ -70,10 +80,11 @@ class ClickableIconSet(private val viewsContext: Context, attrs: AttributeSet): 
      * @param textColor (optional) the title's text color.
      *
      */
-    fun setTitle(show: Boolean, title: String, textSize: Float = 14f, textColor:Int = Color.BLACK)
+    fun setTitle(show: Boolean, title: String = currentTitle, textSize: Float = 14f, textColor:Int = Color.BLACK)
     {
         if (show)
         {
+            currentTitle = title
             icon_set_title.visibility = View.VISIBLE
             icon_set_title.text = title
             icon_set_title.textSize = textSize
@@ -82,7 +93,6 @@ class ClickableIconSet(private val viewsContext: Context, attrs: AttributeSet): 
         else
         {
             icon_set_title.visibility = View.GONE
-            icon_set_title.text = ""
         }
     }
 
