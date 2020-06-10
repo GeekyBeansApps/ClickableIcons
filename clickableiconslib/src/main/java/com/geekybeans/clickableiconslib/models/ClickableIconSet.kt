@@ -70,7 +70,7 @@ class ClickableIconSet(private val viewsContext: Context, attrs: AttributeSet): 
      * @param textColor (optional) the title's text color.
      *
      */
-    fun setTitle(show: Boolean, title: String = "", textSize: Float = 14f, textColor:Int = Color.BLACK)
+    fun setTitle(show: Boolean, title: String, textSize: Float = 14f, textColor:Int = Color.BLACK)
     {
         if (show)
         {
