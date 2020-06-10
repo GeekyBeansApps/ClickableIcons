@@ -55,4 +55,4 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.4.0'
 }
 
-//apply from: 'publish.gradle'
+apply from: 'publish.gradle'
