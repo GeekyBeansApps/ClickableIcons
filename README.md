@@ -18,6 +18,8 @@ The latest version is: `1.1.0`
 Lets review the different icon types:
 ##### Image icon:
 
+![des]()
+
 `ImageIcon(R.drawable.drawable_id, "icon_description", true, true)`
 
 * The first argument is the drawable resource id.<br/>
@@ -28,6 +30,8 @@ Lets review the different icon types:
   This argument is optional, and if no value is passed it’s default value will be false.<br/>
 
 ##### Animated icon:
+
+![des]()
 
 `LottieAnimatedIcon(R.raw.animation_id, "icon_description", true, true, SPEED_VAL, COUNT_VAL)`
 
@@ -43,6 +47,8 @@ Lets review the different icon types:
   This argument is optional, and if no value is passed it’s default value will be infinite looping.<br/>
 
 ##### Selectable icon:
+
+![des]()
 
 **Option 1 -**
 `SelectableIcon(getDrawable(R.drawable.selector_item_spock), "lizard", false)`
