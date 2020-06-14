@@ -8,12 +8,14 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/clickable_icon_animated_imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
+        android:foregroundGravity="center"
+        app:lottie_scale="0.1"
         app:layout_constraintBottom_toTopOf="@+id/clickable_icon_animated_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

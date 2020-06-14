@@ -7,19 +7,18 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.geekybeans.clickableiconslib.R
-import com.geekybeans.clickableiconslib.models.LottieAnimatedIcon
 import com.geekybeans.clickableiconslib.models.ClickableIcon
 import com.geekybeans.clickableiconslib.models.ImageIcon
+import com.geekybeans.clickableiconslib.models.LottieAnimatedIcon
 import com.geekybeans.clickableiconslib.models.SelectableIcon
-import kotlinx.android.synthetic.main.item_clickable_icon_image.view.*
 import kotlinx.android.synthetic.main.item_clickable_icon_animtaion.view.*
+import kotlinx.android.synthetic.main.item_clickable_icon_image.view.*
 import kotlinx.android.synthetic.main.item_clickable_icon_selectable.view.*
 
 
-class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIcon>, val iconClickListener: IconClickedListener?, val params: ConstraintLayout.LayoutParams)
+class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIcon>, val iconClickListener: IconClickedListener?)
     : RecyclerView.Adapter<ClickableIconsRecyclerAdapter.ClickableIconsBaseViewHolder>()
 {
     companion object
@@ -96,7 +95,6 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             view.clickable_icon_image_imageView.apply {
                 setBackgroundResource(ripple.resourceId)
                 setImageResource(clickableIcon.iconImageResource)
-                // this.layoutParams = params
             }
 
             //set the description if exists
@@ -130,7 +128,6 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             view.clickable_icon_selectable_imageView.apply {
                 setBackgroundResource(ripple.resourceId)
                 setImageDrawable((clickableIcon as SelectableIcon).iconSelectorResource)
-                // this.layoutParams = params
             }
 
             //set the description if exists
@@ -159,7 +156,6 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
         override fun bind(clickableIcon: ClickableIcon)
         {
             view.clickable_icon_animated_imageView.apply {
-                if (params.width > 0 || params.height > 0) this.layoutParams = params
                 setBackgroundResource(ripple.resourceId)
                 //set the icon's animation
                 setAnimation(clickableIcon.iconImageResource)

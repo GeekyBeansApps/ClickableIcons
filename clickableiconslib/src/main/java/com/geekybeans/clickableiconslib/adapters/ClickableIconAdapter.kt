@@ -1,7 +1,6 @@
 package com.geekybeans.clickableiconslib.adapters
 
 import android.content.Context
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -74,17 +73,6 @@ class ClickableIconAdapter(private val iconSetView: ClickableIconSet, private va
         fun setLayoutSpanCount(spanCount: Int) = apply { this.spanCount = spanCount}
 
         /**
-         * @param width sets the icon's width (default is WRAP_CONTENT)
-         *
-         * @param height sets the icon's height (default is WRAP_CONTENT)
-         *
-         */
-        fun setIconSize(width: Int, height:Int) = apply {
-            this.width = width
-            this.height = height
-        }
-
-        /**
          * Set the adapter for the ClickableIcon set.
          *
          * @param context the context that will be using the view.
@@ -101,12 +89,7 @@ class ClickableIconAdapter(private val iconSetView: ClickableIconSet, private va
                     LAYOUT_GRID -> layoutManager = GridLayoutManager(context, spanCount)
                 }
 
-                val params = ConstraintLayout.LayoutParams(
-                    if (this@Builder.width > 0) this@Builder.width else ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                    if (this@Builder.height > 0) this@Builder.height else ConstraintLayout.LayoutParams.WRAP_CONTENT
-                )
-
-                adapter = ClickableIconsRecyclerAdapter(iconSet, iconClickListener, params)
+                adapter = ClickableIconsRecyclerAdapter(iconSet, iconClickListener)
             }
         }
 
