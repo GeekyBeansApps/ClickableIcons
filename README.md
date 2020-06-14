@@ -29,7 +29,7 @@ dependencies {
     ...
 }
 ```
-The latest version is: `1.1.0`
+The latest version is: `1.1.1`
 
 
 
