@@ -50,7 +50,7 @@ Lets review the different icon types:
 
 <img src="selectable_icon_set.jpg" width="500" height="200">
 
-**Option 1 -**
+**Option 1 - create from existing selector**
 `SelectableIcon(getDrawable(R.drawable.selector_item_spock), "lizard", false)`
 
 * The first argument is the selector drawable resource id.<br/>
@@ -60,7 +60,7 @@ Lets review the different icon types:
   This argument is optional, and if no value is passed it’s default value will be false.<br/>
 
 
-**Option 2 -** 
+**Option 2 - pass two drawables and let the library create a selector programmatically** 
 `SelectableIcon(this, R.drawable.ic_fist, R.drawable.ic_hand_peace, "peace", false)`
 
 * The first argument in the view’s context.<br/>
