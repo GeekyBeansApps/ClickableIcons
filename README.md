@@ -18,7 +18,7 @@ The latest version is: `1.1.0`
 Lets review the different icon types:
 ##### Image icon:
 
-![des]()
+<img src="image_icon_set.jpg" width="400" height="500">
 
 `ImageIcon(R.drawable.drawable_id, "icon_description", true, true)`
 
@@ -31,7 +31,7 @@ Lets review the different icon types:
 
 ##### Animated icon:
 
-![des]()
+![animated icon set with frame enabled](animated_with_frame.gif)
 
 `LottieAnimatedIcon(R.raw.animation_id, "icon_description", true, true, SPEED_VAL, COUNT_VAL)`
 
@@ -48,7 +48,7 @@ Lets review the different icon types:
 
 ##### Selectable icon:
 
-![des]()
+<img src="selectable_icon_set.jpg" width="500" height="200">
 
 **Option 1 -**
 `SelectableIcon(getDrawable(R.drawable.selector_item_spock), "lizard", false)`
