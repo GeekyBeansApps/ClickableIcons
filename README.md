@@ -138,3 +138,22 @@ setIconSize → sets the icon's width and height (default is WRAP_CONTENT).<br/>
 setAdapter → Set the adapter for the ClickableIcon set.<br/>
 build → builds the ClickableIconSet view according to the builder's values.<br/>
 
+
+
+
+
+
+Resource credits:
+Hamburger by iconify [url:https://www.iconfinder.com/icons/2386376/food_hamburder_v1_icon]
+Ice cream by Thalita Torres [url:https://www.iconfinder.com/icons/1517196/colorful_dessert_food_ice_cream_icon]
+Noodles by KonKapp [url:https://www.iconfinder.com/icons/4306483/asian_bowl_chopsticks_food_noodle_ramen_spaghetti_icon]
+Pizza by W.X. Chee [url:https://www.iconfinder.com/icons/1760345/food_pizza_snack_icon]
+Sandwich by KonKapp [url:https://www.iconfinder.com/icons/4306508/bread_breakfast_fast_fastfood_food_sandwich_snack_icon]
+Watermelon by Gooru [url:https://www.iconfinder.com/icons/592288/breakfast_cream_eating_food_fruit_ice_watermelon_icon]
+Fan by Aleksandr Dolgij [url:https://assets5.lottiefiles.com/packages/lf20_UdIDHC.json]
+Laptop by Splash Animation [url:https://assets3.lottiefiles.com/packages/lf20_nApXIX.json]
+Vacuum by Cihang [url:https://assets6.lottiefiles.com/packages/lf20_AvXSwT.json]
+Washing machine by Mohit Saini [url:https://assets1.lottiefiles.com/datafiles/DyOxNAIZAX9M2BI/data.json]
+Toaster by vik4graphic [url:https://assets2.lottiefiles.com/packages/lf20_k8WCTV.json]
+Printer by Arpan Gupta [url:https://assets1.lottiefiles.com/private_files/lf30_LKnQBq.json]
+All hand icons by Dave Gandy [url:https://www.iconfinder.com/iconsets/font-awesome]
