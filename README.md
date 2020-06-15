@@ -4,24 +4,7 @@ ClickableIcons is a library for Android, that helps creating a set of clickable 
 
 ## Getting Started
 
-Place the following inside 'build.gradle' (project):
-```
-dependencies {
-        ...
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-    }
-    
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        maven { url 'https://dl.bintray.com/geekybeansapps/maven-repo' }
-    }
-}
-```
-
-And the following inside 'build.gradle' (app):
+Place the following inside 'build.gradle' (app):
 ```
 dependencies {
     ...
@@ -30,7 +13,6 @@ dependencies {
 }
 ```
 The latest version is: `1.1.1`
-
 
 
 
