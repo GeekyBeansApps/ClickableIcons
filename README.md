@@ -138,12 +138,8 @@ setIconSize → sets the icon's width and height (default is WRAP_CONTENT).<br/>
 setAdapter → Set the adapter for the ClickableIcon set.<br/>
 build → builds the ClickableIconSet view according to the builder's values.<br/>
 
-
-
-
-
-
-Resource credits:
+<br/><br/><br/><br/><br/>
+Resource credits:<br/>
 Hamburger by iconify [url:https://www.iconfinder.com/icons/2386376/food_hamburder_v1_icon]
 Ice cream by Thalita Torres [url:https://www.iconfinder.com/icons/1517196/colorful_dessert_food_ice_cream_icon]
 Noodles by KonKapp [url:https://www.iconfinder.com/icons/4306483/asian_bowl_chopsticks_food_noodle_ramen_spaghetti_icon]
