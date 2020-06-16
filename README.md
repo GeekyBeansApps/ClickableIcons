@@ -2,6 +2,9 @@
 
 ClickableIcons is a library for Android, that helps creating a set of clickable icons with various types.
 
+## Sample app
+soon...
+
 ## Getting Started
 
 Place the following inside 'build.gradle' (app):
