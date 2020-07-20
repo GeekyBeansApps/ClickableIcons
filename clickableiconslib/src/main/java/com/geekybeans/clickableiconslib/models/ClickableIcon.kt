@@ -70,7 +70,7 @@ class ImageIcon(override val iconImageResource: Int, override val iconDescriptio
  */
 class LottieAnimatedIcon(override val iconImageResource: Int, override val iconDescription: String,
                          override val showIconDescriptionAsLabel: Boolean = false, override val fadeOutIconAfterSelection: Boolean = false,
-                         val animationSpeed: Float = 1f, val repeatCount: Int = LottieDrawable.INFINITE): ClickableIcon()
+                         val iconSize: Int = 100, val animationSpeed: Float = 1f, val repeatCount: Int = LottieDrawable.INFINITE): ClickableIcon()
 {
 
 }

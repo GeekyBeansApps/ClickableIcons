@@ -23,19 +23,18 @@
 
     <TextView
         android:id="@+id/clickable_icon_animated_description"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:ellipsize="marquee"
-        android:maxLength="11"
         android:gravity="center"
         android:singleLine="true"
         android:text="@string/dummy"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/clickable_icon_animated_imageView"
+        app:layout_constraintStart_toStartOf="@+id/clickable_icon_animated_imageView"
         app:layout_constraintTop_toBottomOf="@+id/clickable_icon_animated_imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,6 +27,8 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
         val ANIMATED_ICON_LAYOUT_ID = R.layout.item_clickable_icon_animtaion
         val SELECTABLE_ICON_LAYOUT_ID = R.layout.item_clickable_icon_selectable
         const val FADE_OUT_DURATION = 300L
+        const val TEXT_SIZE_ADDITION = 7
+        const val TEXT_SIZE_DIVIDER = 10
     }
 
     override fun getItemCount() = clickableIcons.size
@@ -62,6 +64,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
     {
         abstract fun bind(clickableIcon: ClickableIcon)
         val ripple = TypedValue()
+        val density = baseItemView.context.resources.displayMetrics.density
 
         init
         {
@@ -100,6 +103,12 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             //set the description if exists
             if (clickableIcon.iconDescription.isNotBlank() && clickableIcon.showIconDescriptionAsLabel)
             {
+                //set the text's size
+                val drawable = view.context.getDrawable(clickableIcon.iconImageResource)
+                val iconInDp = drawable!!.intrinsicWidth / density
+                val textSize = (TEXT_SIZE_ADDITION + (iconInDp / TEXT_SIZE_DIVIDER)).toInt()
+                view.clickable_icon_image_description.textSize = textSize.toFloat()
+
                 view.clickable_icon_image_description.text = clickableIcon.iconDescription
             }
             else
@@ -133,6 +142,12 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             //set the description if exists
             if (clickableIcon.iconDescription.isNotBlank() && clickableIcon.showIconDescriptionAsLabel)
             {
+                //set the text's size
+                val iconInDp = (clickableIcon as SelectableIcon).iconSelectorResource!!.intrinsicWidth / density
+                val textSize = (TEXT_SIZE_ADDITION + (iconInDp / TEXT_SIZE_DIVIDER)).toInt()
+                view.clickable_icon_selectable_description.textSize = textSize.toFloat()
+
+                //set the text
                 view.clickable_icon_selectable_description.text = clickableIcon.iconDescription
             }
             else
@@ -157,6 +172,10 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
         {
             view.clickable_icon_animated_imageView.apply {
                 setBackgroundResource(ripple.resourceId)
+                //set the icon's size
+                val iconSize = ((clickableIcon as LottieAnimatedIcon).iconSize * density).toInt()
+                layoutParams.width = iconSize
+                layoutParams.height = iconSize
                 //set the icon's animation
                 setAnimation(clickableIcon.iconImageResource)
                 repeatCount = (clickableIcon as LottieAnimatedIcon).repeatCount
@@ -168,6 +187,11 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             //set the description if exists
             if (clickableIcon.iconDescription.isNotBlank() && clickableIcon.showIconDescriptionAsLabel)
             {
+                //set the text's size
+                val iconInDp = (clickableIcon as LottieAnimatedIcon).iconSize
+                val textSize = (TEXT_SIZE_ADDITION + (iconInDp / TEXT_SIZE_DIVIDER))
+                view.clickable_icon_animated_description.textSize = textSize.toFloat()
+
                 view.clickable_icon_animated_description.text = clickableIcon.iconDescription
             }
             else
