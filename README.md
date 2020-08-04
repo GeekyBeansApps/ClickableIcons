@@ -11,11 +11,11 @@ Place the following inside 'build.gradle' (app):
 ```
 dependencies {
     ...
-    implementation 'com.geekybeans.clickableiconslib:clickableiconslib:1.1.0'
+    implementation 'com.geekybeans.clickableiconslib:clickableiconslib:1.1.2'
     ...
 }
 ```
-The latest version is: `1.1.1`
+The latest version is: `1.1.2`
 
 
 
@@ -45,9 +45,11 @@ Lets review the different icon types:
   This argument is optional, and if no value is passed it’s default value will be false.<br/>
 * The fourth argument is for making the icon fade out on pressed.<br/>
   This argument is optional, and if no value is passed it’s default value will be false.<br/>
-* The fifth argument is a float value representing the animation’s speed.<br/>
+* The fifth argument is an int value representing the icon's size (width x height).<br/>
+  This argument is optional, and if no value is passed it’s default value will be 100.<br/>
+* The sixth argument is a float value representing the animation’s speed.<br/>
   This argument is optional, and if no value is passed it’s default value will be 1f (which is the normal speed).<br/>
-* The sixth argument is an int representing the animation’s repeatition count.<br/>
+* The seventh argument is an int representing the animation’s repeatition count.<br/>
   This argument is optional, and if no value is passed it’s default value will be infinite looping.<br/>
 
 ##### Selectable icon:
