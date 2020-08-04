@@ -15,7 +15,7 @@ dependencies {
     ...
 }
 ```
-The latest version is: `1.1.2`
+The latest version is: `1.1.3`
 
 
 
