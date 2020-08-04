@@ -26,10 +26,35 @@ import com.airbnb.lottie.LottieDrawable
  */
 sealed class ClickableIcon()
 {
+    companion object
+    {
+        const val DEFAULT_PADDING = 0
+    }
+
     abstract val iconImageResource: Int
     abstract val iconDescription: String
     abstract val showIconDescriptionAsLabel: Boolean
     abstract val fadeOutIconAfterSelection: Boolean
+    var paddingStart = DEFAULT_PADDING
+    var paddingEnd = DEFAULT_PADDING
+    var paddingTop = DEFAULT_PADDING
+    var paddingBottom = DEFAULT_PADDING
+
+    /**
+     * Set the icon set's padding
+     *
+     * @param start sets the icon set's start padding (default is 0)
+     * @param end sets the icon set's end padding (default is 0)
+     * @param top sets the icon set's top padding (default is 0)
+     * @param bottom sets the icon set's bottom padding (default is 0)
+     */
+    fun setPadding(start:Int = DEFAULT_PADDING,end:Int = DEFAULT_PADDING,top:Int = DEFAULT_PADDING,bottom:Int = DEFAULT_PADDING)
+    {
+        paddingStart = start
+        paddingEnd = end
+        paddingTop = top
+        paddingBottom = bottom
+    }
 }
 
 /**

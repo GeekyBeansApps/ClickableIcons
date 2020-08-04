@@ -94,6 +94,13 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
     {
         override fun bind(clickableIcon: ClickableIcon)
         {
+            //set the icon's padding
+            view.setPadding(
+                clickableIcon.paddingStart*density.toInt(),
+                clickableIcon.paddingTop*density.toInt(),
+                clickableIcon.paddingEnd*density.toInt(),
+                clickableIcon.paddingBottom*density.toInt())
+
             //set the image resource
             view.clickable_icon_image_imageView.apply {
                 setBackgroundResource(ripple.resourceId)
@@ -133,6 +140,13 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
     {
         override fun bind(clickableIcon: ClickableIcon)
         {
+            //set the icon's padding
+            view.setPadding(
+                clickableIcon.paddingStart*density.toInt(),
+                clickableIcon.paddingTop*density.toInt(),
+                clickableIcon.paddingEnd*density.toInt(),
+                clickableIcon.paddingBottom*density.toInt())
+
             //set the image resource
             view.clickable_icon_selectable_imageView.apply {
                 setBackgroundResource(ripple.resourceId)
@@ -170,6 +184,13 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
     {
         override fun bind(clickableIcon: ClickableIcon)
         {
+            //set the icon's padding
+            view.setPadding(
+                clickableIcon.paddingStart*density.toInt(),
+                clickableIcon.paddingTop*density.toInt(),
+                clickableIcon.paddingEnd*density.toInt(),
+                clickableIcon.paddingBottom*density.toInt())
+
             view.clickable_icon_animated_imageView.apply {
                 setBackgroundResource(ripple.resourceId)
                 //set the icon's size
