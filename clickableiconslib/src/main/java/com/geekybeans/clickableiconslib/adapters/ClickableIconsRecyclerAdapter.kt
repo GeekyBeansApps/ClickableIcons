@@ -113,10 +113,13 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
                 //set the text's size
                 val drawable = view.context.getDrawable(clickableIcon.iconImageResource)
                 val iconInDp = drawable!!.intrinsicWidth / density
-                val textSize = (TEXT_SIZE_ADDITION + (iconInDp / TEXT_SIZE_DIVIDER)).toInt()
-                view.clickable_icon_image_description.textSize = textSize.toFloat()
+                val calcTextSize = (TEXT_SIZE_ADDITION + (iconInDp / TEXT_SIZE_DIVIDER)).toInt()
 
-                view.clickable_icon_image_description.text = clickableIcon.iconDescription
+                view.clickable_icon_image_description.apply{
+                    textSize = calcTextSize.toFloat()
+                    text = clickableIcon.iconDescription
+                    isSingleLine = clickableIcon.singleLine
+                }
             }
             else
             {
@@ -158,11 +161,13 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             {
                 //set the text's size
                 val iconInDp = (clickableIcon as SelectableIcon).iconSelectorResource!!.intrinsicWidth / density
-                val textSize = (TEXT_SIZE_ADDITION + (iconInDp / TEXT_SIZE_DIVIDER)).toInt()
-                view.clickable_icon_selectable_description.textSize = textSize.toFloat()
+                val calcTextSize = (TEXT_SIZE_ADDITION + (iconInDp / TEXT_SIZE_DIVIDER)).toInt()
 
-                //set the text
-                view.clickable_icon_selectable_description.text = clickableIcon.iconDescription
+                view.clickable_icon_selectable_description.apply {
+                    textSize = calcTextSize.toFloat()
+                    text = clickableIcon.iconDescription
+                    isSingleLine = clickableIcon.singleLine
+                }
             }
             else
             {
@@ -210,10 +215,13 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             {
                 //set the text's size
                 val iconInDp = (clickableIcon as LottieAnimatedIcon).iconSize
-                val textSize = (TEXT_SIZE_ADDITION + (iconInDp / TEXT_SIZE_DIVIDER))
-                view.clickable_icon_animated_description.textSize = textSize.toFloat()
+                val calcTextSize = (TEXT_SIZE_ADDITION + (iconInDp / TEXT_SIZE_DIVIDER))
 
-                view.clickable_icon_animated_description.text = clickableIcon.iconDescription
+                view.clickable_icon_animated_description.apply {
+                    textSize = calcTextSize.toFloat()
+                    text = clickableIcon.iconDescription
+                    isSingleLine = clickableIcon.singleLine
+                }
             }
             else
             {

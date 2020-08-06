@@ -23,6 +23,8 @@ import com.airbnb.lottie.LottieDrawable
  *
  *  @property fadeOutIconAfterSelection Set this to true if you want the icon will fade out on pressed.
  *  This option is only for ImageIcon or LottieAnimatedIcon (otherwise will be ignored).
+ *
+ *  @property singleLine Set this to false if you want the icon's description to be multiline.
  */
 sealed class ClickableIcon()
 {
@@ -35,10 +37,12 @@ sealed class ClickableIcon()
     abstract val iconDescription: String
     abstract val showIconDescriptionAsLabel: Boolean
     abstract val fadeOutIconAfterSelection: Boolean
+    abstract val singleLine: Boolean
     var paddingStart = DEFAULT_PADDING
     var paddingEnd = DEFAULT_PADDING
     var paddingTop = DEFAULT_PADDING
     var paddingBottom = DEFAULT_PADDING
+
 
     /**
      * Set the icon set's padding
@@ -68,9 +72,12 @@ sealed class ClickableIcon()
  *
  * @param fadeOutIconAfterSelection (optional) Set this to true if you want the icon will fade out on pressed.
  *
+ * @param singleLine (optional) Set this to false if you want the icon's description to be multiline.
+ *
  */
 class ImageIcon(override val iconImageResource: Int, override val iconDescription: String,
-                override val showIconDescriptionAsLabel: Boolean = false, override val fadeOutIconAfterSelection: Boolean = false): ClickableIcon()
+                override val showIconDescriptionAsLabel: Boolean = false, override val fadeOutIconAfterSelection: Boolean = false,
+                override val singleLine: Boolean = true): ClickableIcon()
 {
 
 }
@@ -92,10 +99,13 @@ class ImageIcon(override val iconImageResource: Int, override val iconDescriptio
  * Any positive int for the number of times the animation should repeat, 0 for one time only,
  * or LottieDrawable.INFINITE (-1) - for infinite repeat.
  *
+ * @param singleLine (optional) Set this to false if you want the icon's description to be multiline.
+ *
  */
 class LottieAnimatedIcon(override val iconImageResource: Int, override val iconDescription: String,
                          override val showIconDescriptionAsLabel: Boolean = false, override val fadeOutIconAfterSelection: Boolean = false,
-                         val iconSize: Int = 100, val animationSpeed: Float = 1f, val repeatCount: Int = LottieDrawable.INFINITE): ClickableIcon()
+                         val iconSize: Int = 100, val animationSpeed: Float = 1f, val repeatCount: Int = LottieDrawable.INFINITE,
+                         override val singleLine: Boolean = true): ClickableIcon()
 {
 
 }
@@ -110,10 +120,12 @@ class LottieAnimatedIcon(override val iconImageResource: Int, override val iconD
  *
  * @param showIconDescriptionAsLabel (optional) set whether to show/hide the icon's description as a TextView below it.
  *
+ * @param singleLine (optional) Set this to false if you want the icon's description to be multiline.
+ *
  */
 
 class SelectableIcon(private val selectorResource: Drawable?, override val iconDescription: String,
-                     override val showIconDescriptionAsLabel: Boolean = false): ClickableIcon()
+                     override val showIconDescriptionAsLabel: Boolean = false, override val singleLine: Boolean = true): ClickableIcon()
 {
     override var iconImageResource = 0
     override val fadeOutIconAfterSelection: Boolean = false
@@ -141,9 +153,11 @@ class SelectableIcon(private val selectorResource: Drawable?, override val iconD
      *
      * @param showIconDescriptionAsLabel (optional) set whether to show/hide the icon's description as a TextView below it.
      *
+     * @param singleLine (optional) Set this to false if you want the icon's description to be multiline.
+     *
      */
-    constructor(context: Context, deselectedImageResource: Int, selectedImageResource: Int, iconDescription: String, showIconDescriptionAsLabel: Boolean = false)
-            : this(context.getDrawable(deselectedImageResource), iconDescription, showIconDescriptionAsLabel)
+    constructor(context: Context, deselectedImageResource: Int, selectedImageResource: Int, iconDescription: String, showIconDescriptionAsLabel: Boolean = false, singleLine: Boolean = true)
+            : this(context.getDrawable(deselectedImageResource), iconDescription, showIconDescriptionAsLabel, singleLine)
     {
         //get drawables
         val selectedDrawable = context.getDrawable(selectedImageResource)
