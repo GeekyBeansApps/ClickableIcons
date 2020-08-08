@@ -11,11 +11,11 @@ Place the following inside 'build.gradle' (app):
 ```
 dependencies {
     ...
-    implementation 'com.geekybeans.clickableiconslib:clickableiconslib:1.1.2'
+    implementation 'com.geekybeans.clickableiconslib:clickableiconslib:1.1.5'
     ...
 }
 ```
-The latest version is: `1.1.4`
+The latest version is: `1.1.5`
 
 
 
