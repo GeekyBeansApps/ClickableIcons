@@ -71,7 +71,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             baseItemView.context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, ripple, true)
         }
 
-        fun fadeOutClickedIcon(iconDescription: String)
+        fun fadeOutClickedIcon(iconDescription: String, position: Int)
         {
             val anim = AnimationUtils.loadAnimation(baseItemView.context, android.R.anim.fade_out)
             anim.duration = FADE_OUT_DURATION
@@ -82,7 +82,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
 
                 override fun onAnimationEnd(animation: Animation?)
                 {
-                    iconClickListener?.onIconClicked(iconDescription)
+                    iconClickListener?.onIconClicked(iconDescription, true, position)
                 }
             })
 
@@ -131,8 +131,8 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             {
                 view.clickable_icon_image_imageView.setOnClickListener {
                     when {
-                        clickableIcon.fadeOutIconAfterSelection -> fadeOutClickedIcon(clickableIcon.iconDescription)
-                        else -> iconClickListener.onIconClicked(clickableIcon.iconDescription)
+                        clickableIcon.fadeOutIconAfterSelection -> fadeOutClickedIcon(clickableIcon.iconDescription, adapterPosition)
+                        else -> iconClickListener.onIconClicked(clickableIcon.iconDescription, true, adapterPosition)
                     }
                 }
             }
@@ -179,7 +179,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             {
                 view.clickable_icon_selectable_imageView.setOnClickListener {
                     it.isSelected = !it.isSelected
-                    iconClickListener.onIconSelected(clickableIcon.iconDescription, it.isSelected)
+                    iconClickListener.onIconClicked(clickableIcon.iconDescription, it.isSelected, adapterPosition)
                 }
             }
         }
@@ -234,11 +234,11 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
                 view.clickable_icon_animated_imageView.setOnClickListener {
                     if (clickableIcon.fadeOutIconAfterSelection)
                     {
-                        fadeOutClickedIcon(clickableIcon.iconDescription)
+                        fadeOutClickedIcon(clickableIcon.iconDescription, adapterPosition)
                     }
                     else
                     {
-                        iconClickListener.onIconClicked(clickableIcon.iconDescription)
+                        iconClickListener.onIconClicked(clickableIcon.iconDescription, true, adapterPosition)
                     }
                 }
             }
@@ -247,8 +247,6 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
 
     interface IconClickedListener
     {
-        fun onIconClicked(iconDescription: String)
-        fun onIconSelected(iconDescription: String, isSelected: Boolean)
-//        fun onIconSelected(iconDescription: String, state: Int)
+        fun onIconClicked(iconDescription: String, isSelected: Boolean, position: Int)
     }
 }
