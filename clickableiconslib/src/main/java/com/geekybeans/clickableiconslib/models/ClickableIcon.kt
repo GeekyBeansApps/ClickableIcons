@@ -33,7 +33,8 @@ sealed class ClickableIcon()
         const val DEFAULT_PADDING = 0
     }
 
-    abstract val iconImageResource: Int
+    abstract val iconImageResource: String
+    abstract val iconImageResourceDefType: String
     abstract val iconDescription: String
     abstract val showIconDescriptionAsLabel: Boolean
     abstract val fadeOutIconAfterSelection: Boolean
@@ -75,7 +76,7 @@ sealed class ClickableIcon()
  * @param singleLine (optional) Set this to false if you want the icon's description to be multiline.
  *
  */
-class ImageIcon(override val iconImageResource: Int, override val iconDescription: String,
+class ImageIcon(override val iconImageResource: String, override val iconImageResourceDefType: String, override val iconDescription: String,
                 override val showIconDescriptionAsLabel: Boolean = false, override val fadeOutIconAfterSelection: Boolean = false,
                 override val singleLine: Boolean = true): ClickableIcon()
 {
@@ -102,7 +103,7 @@ class ImageIcon(override val iconImageResource: Int, override val iconDescriptio
  * @param singleLine (optional) Set this to false if you want the icon's description to be multiline.
  *
  */
-class LottieAnimatedIcon(override val iconImageResource: Int, override val iconDescription: String,
+class LottieAnimatedIcon(override val iconImageResource: String, override val iconImageResourceDefType: String, override val iconDescription: String,
                          override val showIconDescriptionAsLabel: Boolean = false, override val fadeOutIconAfterSelection: Boolean = false,
                          val iconSize: Int = 100, val animationSpeed: Float = 1f, val repeatCount: Int = LottieDrawable.INFINITE,
                          override val singleLine: Boolean = true): ClickableIcon()
@@ -124,13 +125,13 @@ class LottieAnimatedIcon(override val iconImageResource: Int, override val iconD
  *
  */
 
-class SelectableIcon(private val selectorResource: Drawable?, override val iconDescription: String,
+class SelectableIcon(val selectorResource: String, override val iconImageResourceDefType: String, override val iconDescription: String,
                      override val showIconDescriptionAsLabel: Boolean = false, override val singleLine: Boolean = true): ClickableIcon()
 {
-    override var iconImageResource = 0
+    override var iconImageResource: String = ""
     override val fadeOutIconAfterSelection: Boolean = false
 
-    var iconSelectorResource = selectorResource
+    var iconSelectorResource:StateListDrawable? = null
 
     companion object
     {
@@ -156,12 +157,12 @@ class SelectableIcon(private val selectorResource: Drawable?, override val iconD
      * @param singleLine (optional) Set this to false if you want the icon's description to be multiline.
      *
      */
-    constructor(context: Context, deselectedImageResource: Int, selectedImageResource: Int, iconDescription: String, showIconDescriptionAsLabel: Boolean = false, singleLine: Boolean = true)
-            : this(context.getDrawable(deselectedImageResource), iconDescription, showIconDescriptionAsLabel, singleLine)
+    constructor(context: Context, deselectedImageResource: String, selectedImageResource: String, iconImageResourceDefType: String, iconDescription: String, showIconDescriptionAsLabel: Boolean = false, singleLine: Boolean = true)
+            : this(context.resources.getResourceName(context.resources.getIdentifier(deselectedImageResource,iconImageResourceDefType,context.packageName)),iconImageResourceDefType, iconDescription, showIconDescriptionAsLabel, singleLine)
     {
         //get drawables
-        val selectedDrawable = context.getDrawable(selectedImageResource)
-        val deSelectedDrawable = context.getDrawable(deselectedImageResource)
+        val selectedDrawable = context.getDrawable(context.resources.getIdentifier(selectedImageResource,iconImageResourceDefType,context.packageName))
+        val deSelectedDrawable = context.getDrawable(context.resources.getIdentifier(deselectedImageResource,iconImageResourceDefType,context.packageName))
         //create a selector drawable
         val selector = StateListDrawable()
         selector.addState(STATE_SELECTED_VAL, selectedDrawable)

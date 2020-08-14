@@ -64,7 +64,9 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
     {
         abstract fun bind(clickableIcon: ClickableIcon)
         val ripple = TypedValue()
-        val density = baseItemView.context.resources.displayMetrics.density
+        val baseContext = baseItemView.context
+        val baseResources = baseContext.resources
+        val density = baseResources.displayMetrics.density
 
         init
         {
@@ -104,14 +106,15 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             //set the image resource
             view.clickable_icon_image_imageView.apply {
                 setBackgroundResource(ripple.resourceId)
-                setImageResource(clickableIcon.iconImageResource)
+//                setImageResource(clickableIcon.iconImageResource)
+                setImageResource(baseResources.getIdentifier(clickableIcon.iconImageResource, clickableIcon.iconImageResourceDefType, baseContext.packageName))
             }
 
             //set the description if exists
             if (clickableIcon.iconDescription.isNotBlank() && clickableIcon.showIconDescriptionAsLabel)
             {
                 //set the text's size
-                val drawable = view.context.getDrawable(clickableIcon.iconImageResource)
+                val drawable = view.context.getDrawable(baseResources.getIdentifier(clickableIcon.iconImageResource, clickableIcon.iconImageResourceDefType, baseContext.packageName))
                 val iconInDp = drawable!!.intrinsicWidth / density
                 val calcTextSize = (TEXT_SIZE_ADDITION + (iconInDp / TEXT_SIZE_DIVIDER)).toInt()
 
@@ -143,6 +146,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
     {
         override fun bind(clickableIcon: ClickableIcon)
         {
+            var iconInDp = 100f
             //set the icon's padding
             view.setPadding(
                 clickableIcon.paddingStart*density.toInt(),
@@ -153,14 +157,24 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
             //set the image resource
             view.clickable_icon_selectable_imageView.apply {
                 setBackgroundResource(ripple.resourceId)
-                setImageDrawable((clickableIcon as SelectableIcon).iconSelectorResource)
+                if ((clickableIcon as SelectableIcon).iconSelectorResource != null)
+                {
+                    setImageDrawable((clickableIcon as SelectableIcon).iconSelectorResource)
+                    iconInDp = (clickableIcon as SelectableIcon).iconSelectorResource!!.intrinsicWidth / density
+                }
+                else
+                {
+                    val drawable = baseContext.getDrawable(baseResources.getIdentifier((clickableIcon as SelectableIcon).selectorResource, clickableIcon.iconImageResourceDefType, baseContext.packageName))
+                    setImageDrawable(drawable)
+                    iconInDp = drawable?.intrinsicWidth!! / density
+                }
             }
 
             //set the description if exists
             if (clickableIcon.iconDescription.isNotBlank() && clickableIcon.showIconDescriptionAsLabel)
             {
                 //set the text's size
-                val iconInDp = (clickableIcon as SelectableIcon).iconSelectorResource!!.intrinsicWidth / density
+//                val iconInDp = (clickableIcon as SelectableIcon).iconSelectorResource!!.intrinsicWidth / density
                 val calcTextSize = (TEXT_SIZE_ADDITION + (iconInDp / TEXT_SIZE_DIVIDER)).toInt()
 
                 view.clickable_icon_selectable_description.apply {
@@ -203,7 +217,9 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
                 layoutParams.width = iconSize
                 layoutParams.height = iconSize
                 //set the icon's animation
-                setAnimation(clickableIcon.iconImageResource)
+                val rawAnim = baseResources.getIdentifier(clickableIcon.iconImageResource, clickableIcon.iconImageResourceDefType, baseContext.packageName)
+//                    view.context.getDrawable(baseResources.getIdentifier(clickableIcon.iconImageResource, clickableIcon.iconImageResourceDefType, baseContext.packageName))
+                setAnimation(rawAnim)
                 repeatCount = (clickableIcon as LottieAnimatedIcon).repeatCount
                 speed = clickableIcon.animationSpeed
                 scaleType = ImageView.ScaleType.CENTER_INSIDE
