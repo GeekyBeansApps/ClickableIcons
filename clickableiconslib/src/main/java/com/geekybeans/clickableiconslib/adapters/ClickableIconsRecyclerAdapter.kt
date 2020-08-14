@@ -27,7 +27,7 @@ class ClickableIconsRecyclerAdapter(private val clickableIcons: List<ClickableIc
         val ANIMATED_ICON_LAYOUT_ID = R.layout.item_clickable_icon_animtaion
         val SELECTABLE_ICON_LAYOUT_ID = R.layout.item_clickable_icon_selectable
         const val FADE_OUT_DURATION = 300L
-        const val TEXT_SIZE_ADDITION = 7
+        const val TEXT_SIZE_ADDITION = 5
         const val TEXT_SIZE_DIVIDER = 10
     }
 
